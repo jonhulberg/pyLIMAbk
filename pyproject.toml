@@ -39,6 +39,7 @@ dependencies = [
     "scikit-learn",
     "importlib-resources ; python_version < '3.9'",
     "iminuit",
+    "h5py",
 ]
 
 [project.urls]
