@@ -128,7 +128,7 @@ class MCMCfit(MLfit):
 
             pass
         # Save results to hdf5 backend ...
-        backend = emcee.backends.HDFBackend(self.hdf5path)
+        backend = emcee.backends.HDFBackend(self.hdf5path,name='NAMED')
         backend.reset(nwalkers, number_of_parameters)
         max_n = nlinks
 
