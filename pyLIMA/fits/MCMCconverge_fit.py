@@ -147,7 +147,7 @@ class MCMCfit(MLfit):
                 old_tau = np.inf
 
                 # Now we'll sample for up to max_n steps
-                for sample in sampler.sample(population, iterations=max_n, progress=True):
+                for sample in sampler.sample(population, iterations=max_n, progress=True,store=True):
                     # Only check convergence every 100 steps
                     if sampler.iteration % 100:
                         continue
@@ -165,6 +165,8 @@ class MCMCfit(MLfit):
                     if converged:
                         break
                     old_tau = tau
+
+                sampler.run_mcmc(sampler.get_last_sample(),iterations=1,store=True)
         else:
 
             sampler = emcee.EnsembleSampler(nwalkers, number_of_parameters,
@@ -177,7 +179,7 @@ class MCMCfit(MLfit):
             old_tau = np.inf
 
             # Now we'll sample for up to max_n steps
-            for sample in sampler.sample(population, iterations=max_n, progress=True):
+            for sample in sampler.sample(population, iterations=max_n, progress=True,store=True):
                 # Only check convergence every 100 steps
                 if sampler.iteration % 100:
                     continue
@@ -195,6 +197,7 @@ class MCMCfit(MLfit):
                 if converged:
                     break
                 old_tau = tau
+            sampler.run_mcmc(sampler.get_last_sample(), iterations=1, store=True)
 
         computation_time = python_time.time() - start_time
         print(sys._getframe().f_code.co_name, ' : ' + self.fit_type() + ' fit SUCCESS')
