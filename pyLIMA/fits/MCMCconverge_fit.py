@@ -166,7 +166,6 @@ class MCMCfit(MLfit):
                         break
                     old_tau = tau
 
-                sampler.run_mcmc(sampler.get_last_sample(),nsteps=1,store=True)
         else:
 
             sampler = emcee.EnsembleSampler(nwalkers, number_of_parameters,
@@ -197,7 +196,6 @@ class MCMCfit(MLfit):
                 if converged:
                     break
                 old_tau = tau
-            sampler.run_mcmc(sampler.get_last_sample(), nsteps=1, store=True)
 
         computation_time = python_time.time() - start_time
         print(sys._getframe().f_code.co_name, ' : ' + self.fit_type() + ' fit SUCCESS')
