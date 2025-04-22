@@ -170,7 +170,7 @@ class MCMCfit(MLfit):
         else:
 
             sampler = emcee.EnsembleSampler(nwalkers, number_of_parameters,
-                                            self.objective_function, pool=pool,backend=backend)
+                                            self.objective_function,backend=backend)
 
             index = 0
             autocorr = np.empty(max_n)
