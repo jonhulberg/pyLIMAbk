@@ -18,7 +18,7 @@ class MCMCfit(MLfit):
     """
     def __init__(self, model, rescale_photometry=False, rescale_astrometry=False,
                  telescopes_fluxes_method='polyfit', loss_function='likelihood',
-                 MCMC_walkers=2, MCMC_links=5000,hdf5path=None):
+                 MCMC_walkers=2, MCMC_links=5000,hdf5path=None,objective_path = None):
         """The fit class has to be intialized with an event object."""
 
         super().__init__(model, rescale_photometry=rescale_photometry,
@@ -29,6 +29,7 @@ class MCMCfit(MLfit):
         self.MCMC_walkers = MCMC_walkers  # times number of dimension!
         self.MCMC_links = MCMC_links
         self.hdf5path = hdf5path
+        self.objective_path = objective_path
 
     def fit_type(self):
         return "Monte Carlo Markov Chain (Affine Invariant)"
@@ -36,7 +37,7 @@ class MCMCfit(MLfit):
     def objective_function(self, fit_process_parameters):
 
         #if self.loss_function != 'likelihood':
-
+        print(fit_process_parameters,file=self.objective_path)
         limits_check = self.fit_parameters_inside_limits(fit_process_parameters)
 
         if limits_check is not None:
@@ -50,7 +51,7 @@ class MCMCfit(MLfit):
             return -limits_check #i.e. -np.inf
 
         objective = self.standard_objective_function(fit_process_parameters)
-        print(fit_process_parameters)
+        print(fit_process_parameters,'success',file=self.objective_path)
         return -objective
 
     def fit(self, initial_population=[], computational_pool=False):
