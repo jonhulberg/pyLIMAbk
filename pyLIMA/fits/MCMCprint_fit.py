@@ -37,7 +37,7 @@ class MCMCfit(MLfit):
     def objective_function(self, fit_process_parameters):
 
         #if self.loss_function != 'likelihood':
-        print(fit_process_parameters,file=self.objective_path)
+        self.objective_path.write(str(fit_process_parameters)+'\n')
         limits_check = self.fit_parameters_inside_limits(fit_process_parameters)
 
         if limits_check is not None:
@@ -51,7 +51,7 @@ class MCMCfit(MLfit):
             return -limits_check #i.e. -np.inf
 
         objective = self.standard_objective_function(fit_process_parameters)
-        print(fit_process_parameters,'success',file=self.objective_path)
+        self.objective_path.write(str(fit_process_parameters)+', success\n')
         return -objective
 
     def fit(self, initial_population=[], computational_pool=False):
